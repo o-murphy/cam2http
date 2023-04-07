@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Video Streaming</title>
+</head>
+<body>
+	<h1>Video Streaming</h1>
+	<div>
+		<img src="{{ url_for('video_feed') }}" style="border:1px solid gray" />
+	</div>
+	<form>
+		<select name="cameras" id="cameras">
+			{% for camera in camera_names %}
+				<option value="{{ loop.index - 1 }}" {% if loop.index - 1 == current_camera %}selected{% endif %}>{{ camera }}</option>
+			{% endfor %}
+		</select>
+		<button type="button" onclick="applyCamera()">Apply</button>
+	</form>
+	<script>
+		function applyCamera() {
+			const cameras = document.getElementById('cameras');
+			const selectedCamera = cameras.options[cameras.selectedIndex].value;
+			window.location.href = "/change_camera?camera_id=" + selectedCamera;
+		}
+	</script>
+</body>
+</html>
